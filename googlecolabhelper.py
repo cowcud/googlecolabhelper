@@ -98,6 +98,7 @@ class GoogleColabHelper(object):
     self.mount_notebooks() # Mount and map /content/notebooks
     self.install_libraries() # Install required + any additional libraries
     self.extract_zip_files() # Extract any specified ZIPs
+    print("Google Colab environment setup complete.")
     
   def mount_gdrive(self,*args,**kwargs):
     print("Mounting Google Drive to {}".format(self.GDRIVE_MOUNTPOINT))
