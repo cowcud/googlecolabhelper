@@ -2,7 +2,8 @@
 Make it easier to setup Google Colab environment
 
 Usage:
-  !rm -frv googlecolabhelper
+   
+  !rm -fr googlecolabhelper
   !git clone https://github.com/cowcud/googlecolabhelper.git
   from googlecolabhelper import *
 
