@@ -1,5 +1,6 @@
 import os
 import re
+import importlib
 
 class GoogleColabHelper(object):
   '''
@@ -24,7 +25,8 @@ class GoogleColabHelper(object):
   '''
   
   def __init__(self,additional_libraries=[],extract_zips=[],*args,**kwargs):
-    assert self.__is_google_colab(),"This module only applies for use in Google Colaboratory"
+    if not kwargs.get('local_test_mode'):
+      assert self.__is_google_colab(),"This module only applies for use in Google Colaboratory"
       
     self.additional_libraries = additional_libraries
     self.extract_zips = extract_zips
@@ -109,7 +111,20 @@ class GoogleColabHelper(object):
     except Exception as e:
       print("Unable to mount GDrive")
       raise e
-    
+  
+  def verify(self,files_exist=None,*args,**kwargs):
+    # Currently only verification is on whether files exist, but more may be added later
+    if not files_exist:
+      return
+  
+    # Allow passing single string for check files if only one file to check
+    if not isinstance(files_exist,list):
+      files_exist = [ files_exist ]
+      
+    # Check the specified files all exist (raise exception if not)
+    for f in files_exist:
+      assert os.path.isfile(f),"Google Colab environment not setup correctly ({} does not exist)".format(f)
+  
   def mount_mydrive(self,*args,**kwargs):
     print("Mounting My Drive to {}".format(self.MYDRIVE_MOUNTPOINT))
     
